@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 # flac-rippien laaduntarkistusscripti, ripit ladataan hakemistoon
 # $flacroot ja valmiit siirretään hakemistoon $wappudb
@@ -94,7 +94,8 @@ for ripdir in */; do
   # täytyy tarkastaa molemmat, uploadin dirri ja NAS listaus kun NAS ei päällä
   INDBLOCAL=$(find "$wappudb"/"$ripdir" -type d 2>/dev/null |wc -l)
   ripname=$(echo "${ripdir::-1}")
-  INDB=$(cat /home/wappuradio/wappuradio/dblist.txt |grep "$ripname" 2>/dev/null |wc -l)
+#  INDB=$(cat /home/wappuradio/naslist.txt |grep "$ripname" 2>/dev/null |wc -l)
+  INDB=0
   if [ "$INDB" -ne "0" ] || [ "$INDBLOCAL" -ne "0" ]; then
     echo "Checking $ripdir"
     echo "  Skipping, already in database."
@@ -137,7 +138,7 @@ for ripdir in */; do
   mv "$ripdir" "$wappudb" 2>/dev/null || echo "Already in database."
   # irkkibotille notice
   sleep 1
-  echo "/notice #radiontoimitus :$ripdir" > "/home/wappuradio/irc/irc.nebula.fi/#radiontoimitus/in"
+  echo "/notice #radiontoimitus :$ripdir" > "/home/wappuradio/irc/192.98.101.230/#radiontoimitus/in"
 done
 
 # päivitetään listaus ja lähetetään munkille
@@ -145,9 +146,9 @@ done
 ls /home/wappuradio/db > /home/wappuradio/temp.list
 cat /home/wappuradio/temp.list |wc -l > /home/flac/dbcount.txt
 cp /home/wappuradio/temp.list /home/flac/dblist.txt
-cp /home/wappuradio/temp.list /home/flac/dblist.csv
-sed -i -e 's/^/"/;s/ - [0-9]*$//g;s/$/"/;s/ - /","/' /home/flac/dblist.csv
-sed -i '1s/^/"Artisti","Albumi"\n/' /home/flac/dblist.csv
+#cp /home/wappuradio/temp.list /home/flac/dblist.csv
+#sed -i -e 's/^/"/;s/ - [0-9]*$//g;s/$/"/;s/ - /","/' /home/flac/dblist.csv
+#sed -i '1s/^/"Artisti","Albumi"\n/' /home/flac/dblist.csv
 #rip munkki
 #scp -C /home/flac/dblist.txt wappuradio@munkki.wappuradio.fi:/home/www/intra/dblist.txt
 #scp -C /home/flac/dblist.csv wappuradio@munkki.wappuradio.fi:/home/www/intra/dblist.csv
