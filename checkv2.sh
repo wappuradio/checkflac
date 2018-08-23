@@ -56,7 +56,7 @@ function check {
       return 1
     fi
     AR=$(grep -a "Accurately ripped (" *.log 2>/dev/null|wc -l)
-    if [[ "$AR" -ne "$FLACS" ]]; then
+    if [[ "$AR" -ne "$FLACS" && "$AR" -ne "0" ]]; then
       error=6
       return 1
     fi
