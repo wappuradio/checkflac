@@ -28,11 +28,16 @@ function check {
       error=2
       return 1
     fi
+    ERRORS=$(grep -a -e "^There were errors" *.cue 2>/dev/null|wc -l)
+    if [[ "$ERRORS" -ne "1" ]]; then
+      error=3
+      return 1
+    fi
     M3US=$(ls *.m3u 2>/dev/null|wc -l)
     FLACS=$(ls *.flac 2>/dev/null|wc -l)
     FILES=$(grep -a -e "^FILE" *.cue 2>/dev/null|wc -l)
     if [[ "$FILES" -ne "$FLACS" ]]; then
-      error=3
+      error=4
       return 1
     fi
     UTF16=$(file *.log|grep UTF-16|wc -l)
@@ -47,12 +52,12 @@ function check {
     fi
     DB=$(grep -a "Track not present" *.log 2>/dev/null|wc -l)
     if [[ "$DB" -ne "0" ]]; then
-      error=4
+      error=5
       return 1
     fi
     AR=$(grep -a "Accurately ripped (" *.log 2>/dev/null|wc -l)
     if [[ "$AR" -ne "$FLACS" ]]; then
-      error=5
+      error=6
       return 1
     fi
     error=0
@@ -70,12 +75,15 @@ function status {
       out="no logfile found."
       ;;
     3)
-      out="number of flac-files doesn't match cuesheet."
+      out="there were errors."
       ;;
     4)
-      out="some tracks are not present in AccurateRip database."
+      out="number of flac-files doesn't match cuesheet."
       ;;
     5)
+      out="some tracks are not present in AccurateRip database."
+      ;;
+    6)
       out="not accurately ripped."
       ;;
     0)
