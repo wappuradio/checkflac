@@ -51,7 +51,7 @@ function check {
       chmod 644 *.log
     fi
     DB=$(grep -a "Track not present" *.log 2>/dev/null|wc -l)
-    if [[ "$DB" -ne "0" ]]; then
+    if [[ "$DB" -ne "0" && "$DB" -ne "$FLACS" ]]; then
       error=5
       return 1
     fi
