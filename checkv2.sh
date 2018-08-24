@@ -29,7 +29,7 @@ function check {
       return 1
     fi
     ERRORS=$(grep -a -e "^There were errors" *.log 2>/dev/null|wc -l)
-    if [[ "$ERRORS" -ne "1" ]]; then
+    if [[ "$ERRORS" -ne "0" ]]; then
       error=3
       return 1
     fi
