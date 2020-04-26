@@ -154,13 +154,4 @@ done
 ls /home/wappuradio/db > /home/wappuradio/temp.list
 cat /home/wappuradio/temp.list |wc -l > /home/flac/dbcount.txt
 cp /home/wappuradio/temp.list /home/flac/dblist.txt
-#cp /home/wappuradio/temp.list /home/flac/dblist.csv
-#sed -i -e 's/^/"/;s/ - [0-9]*$//g;s/$/"/;s/ - /","/' /home/flac/dblist.csv
-#sed -i '1s/^/"Artisti","Albumi"\n/' /home/flac/dblist.csv
-#rip munkki
-#scp -C /home/flac/dblist.txt wappuradio@munkki.wappuradio.fi:/home/www/intra/dblist.txt
-#scp -C /home/flac/dblist.csv wappuradio@munkki.wappuradio.fi:/home/www/intra/dblist.csv
-#scp -C /home/flac/dbcount.txt wappuradio@munkki.wappuradio.fi:/home/www/intra/dbcount.txt
-#scp -C /home/flac/{dblist.txt,dblist.csv,dbcount.txt} upload@sauron.wappuradio.fi:/var/www/intra/
-#rsync -a /home/wappuradio/db 130.230.31.82:/srv/nfs/music
 fi
