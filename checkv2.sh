@@ -146,7 +146,7 @@ for ripdir in */; do
   mv "$ripdir" "$wappudb" 2>/dev/null || echo "Already in database."
   # irkkibotille notice
   sleep 1
-  echo "/notice #radiontoimitus :$ripdir" > "/home/wappuradio/irc/192.98.101.230/#radiontoimitus/in"
+  echo "/notice #radiontoimitus :${ripdir%/}" > "/home/wappuradio/irc/192.98.101.230/#radiontoimitus/in"
 done
 
 ls /home/wappuradio/db > /home/flac/dblist.txt
