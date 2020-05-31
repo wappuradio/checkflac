@@ -4,12 +4,9 @@ tail -f "/home/wappuradio/irc/192.98.101.230/#radiontoimitus/out" | \
     	regex='^(<.*> )?!kanta levyt$'
 	#echo "$mesg"
         if [[ "$mesg" =~ $regex ]]; then
-          dbcount=$(cat /home/flac/dbcount.txt|cut -d ' ' -f 5)
-          dfused=$(df -h |grep upload |cut -d ' ' -f 9)
-          dftotal=$(df -h |grep upload |cut -d ' ' -f 5)
-          finddirs=$(find /home/wappuradio/db -type d 2>/dev/null|wc -l)
-          discs=0
-          let "discs = $dbcount + ($finddirs - $dbcount)"
-          echo "/notice #radiontoimitus :$dbcount albums, $discs discs, hdd space $dfused/$dftotal"
+          dbcount=$(awk '{print $1}' < /home/flac/dbcount.txt)
+          hddspace=$(df -h|grep upload|awk '{print $3 "/" $2}')
+          discs=$(find /home/wappuradio/db -type d -not -name CD1 2>/dev/null|wc -l)
+          echo "/notice #radiontoimitus :$dbcount albums, $discs discs, hdd space $hddspace"
         fi
     done > "/home/wappuradio/irc/192.98.101.230/#radiontoimitus/in"
